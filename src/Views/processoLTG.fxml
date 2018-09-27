@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="anchorpan" prefHeight="89.0" prefWidth="102.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerProcessoLTG">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="ID:" />
+                  <Label text="TOTAL:" />
+                  <Label text="Tempo Restante" />
+                  <Label text="ESTADO:" />
+                  <Label text="DEADLINE" />
+               </children>
+            </VBox>
+            <VBox prefHeight="95.0" prefWidth="102.0">
+               <children>
+                  <Label fx:id="id" text="id:" />
+                  <Label fx:id="totalTempo" text="total:" />
+                  <Label fx:id="tempoRestante" text="tempoRestante" />
+                  <Label fx:id="estado" text="estado:" />
+                  <Label fx:id="deadLine" text="deadLine:" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
