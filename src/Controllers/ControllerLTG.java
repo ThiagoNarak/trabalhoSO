@@ -206,6 +206,7 @@ public class ControllerLTG extends Thread implements Initializable {
 
             hBoxProcesso.getChildren().add(p.getRoot());
 
+
         }
 
 

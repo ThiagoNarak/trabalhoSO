@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -10,8 +11,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="1300" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121" fx:controller="Controllers.ControllerLTG">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="1300" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ControllerLTG">
 
 <GridPane fx:id="gridpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="402.0" prefWidth="600.0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" xmlns="http://javafx.com/javafx/8.0.121">
   <columnConstraints>
@@ -24,39 +26,96 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0">
-         <content>
-            <HBox fx:id="hBoxProcesso" prefHeight="134.0" prefWidth="438.0" />
-         </content>
-      </ScrollPane>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-         <content>
-            <HBox fx:id="hBoxCore" prefHeight="131.0" prefWidth="455.0" />
-         </content>
-      </ScrollPane>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-         <content>
-            <HBox fx:id="hBoxDeadLine" prefHeight="133.0" prefWidth="453.0" />
-         </content>
-      </ScrollPane>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
          <children>
-            <Label contentDisplay="CENTER" text="Processos" textAlignment="CENTER" />
-            <TextField fx:id="textfield_processos" promptText="N processos" />
-            <Button mnemonicParsing="false" onAction="#processoMais1" text="Processo + 1" />
+            <Label contentDisplay="CENTER" text="Processos" textAlignment="CENTER">
+                  <font>
+                     <Font size="24.0" />
+                  </font></Label>
+            <TextField fx:id="textfield_processos" promptText="N processos">
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin></TextField>
+            <Button mnemonicParsing="false" onAction="#processoMais1" text="Processo + 1">
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin></Button>
          </children>
+            <GridPane.margin>
+               <Insets />
+            </GridPane.margin>
+            <padding>
+               <Insets left="50.0" right="50.0" top="50.0" />
+            </padding>
       </VBox>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Label text="Cores" />
+            <Label text="Cores">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+                  <padding>
+                     <Insets bottom="10.0" />
+                  </padding></Label>
             <TextField fx:id="textfieldCores" promptText="N cores" />
          </children>
+            <padding>
+               <Insets left="50.0" right="50.0" top="50.0" />
+            </padding>
       </VBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Button mnemonicParsing="false" onAction="#btn_SJFGO" text="LTG GO!" />
+            <Button mnemonicParsing="false" onAction="#btn_SJFGO" style="-fx-background-color: blue; -fx-background-radius: 8,7,6; -fx-background-insets: 0,1,2; -fx-text-fill: white; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="LTG GO!" textAlignment="CENTER" textFill="WHITE">
+                  <font>
+                     <Font size="21.0" />
+                  </font></Button>
          </children>
       </VBox>
+         <VBox prefHeight="200.0" prefWidth="100.0">
+            <children>
+               <Label contentDisplay="CENTER" text="Aptos" textFill="#458942">
+                  <font>
+                     <Font name="System Bold" size="24.0" />
+                  </font>
+                  <VBox.margin>
+                     <Insets />
+                  </VBox.margin>
+               </Label>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-insets: 5;                   -fx-border-radius: 5;-fx-border-color: green;">
+               <content>
+                  <HBox fx:id="hBoxProcesso" prefHeight="136.0" prefWidth="433.0" />
+               </content>
+            </ScrollPane>
+            </children>
+         </VBox>
+         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
+            <children>
+               <Label text="Processando" textFill="#eb0c0c">
+                  <font>
+                     <Font name="System Bold" size="24.0" />
+                  </font>
+               </Label>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-insets: 5;                   -fx-border-radius: 5;-fx-border-color: red;">
+               <content>
+                  <HBox fx:id="hBoxCore" prefHeight="131.0" prefWidth="455.0" />
+               </content>
+            </ScrollPane>
+            </children>
+         </VBox>
+         <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+            <children>
+               <Label text="Finalizados" textFill="#6456bc">
+                  <font>
+                     <Font size="24.0" />
+                  </font>
+               </Label>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 10;-fx-border-style: solid inside;-fx-border-width: 2;-fx-border-insets: 5;                   -fx-border-radius: 5;-fx-border-color: blue;">
+               <content>
+                  <HBox fx:id="hBoxDeadLine" prefHeight="133.0" prefWidth="453.0" />
+               </content>
+            </ScrollPane>
+            </children>
+         </VBox>
    </children>
 </GridPane>
 </AnchorPane>

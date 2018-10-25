@@ -20,13 +20,20 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 public class ControllerRR extends Thread implements Initializable {
-    @FXML public GridPane gridpane;
-    @FXML public HBox hBoxCore = new HBox();
-    @FXML public HBox hBoxProcesso = new HBox();
-    @FXML public HBox hBoxDeadLine= new HBox();
-    @FXML public TextField textfield_processos;
-    @FXML public TextField textfieldCores;
-    @FXML public TextField textField_quantum;
+    @FXML
+    public GridPane gridpane;
+    @FXML
+    public HBox hBoxCore = new HBox();
+    @FXML
+    public HBox hBoxProcesso = new HBox();
+    @FXML
+    public HBox hBoxDeadLine = new HBox();
+    @FXML
+    public TextField textfield_processos;
+    @FXML
+    public TextField textfieldCores;
+    @FXML
+    public TextField textField_quantum;
 
 
     ArrayList<ControllerProcessoRR> processoArrayList = new ArrayList<>();
@@ -40,7 +47,8 @@ public class ControllerRR extends Thread implements Initializable {
 
 
     }
-    public void start(){
+
+    public void start() {
 
         Task task = new Task<Void>() {
             @Override
@@ -64,67 +72,114 @@ public class ControllerRR extends Thread implements Initializable {
         th.start();
 
 
+    }
+
+    public void arrochaNoProcessador() {
+
+        if (coreArrayList.size()< Integer.parseInt(textfieldCores.getText())&& processoArrayList.size()>0){
+            moveParaProcessador();
+        }
+
+        for (int i = 0; i <coreArrayList.size() ; i++) {
+
+            if (coreArrayList.get(i).processo.getEstado()==EnumEstado.FINALIZADO){
+                moveParaFinalizados(i);
+                break;
+            }
+
+            if (coreArrayList.get(i).processo.getQuantumRestante()>= Integer.parseInt(textField_quantum.getText())){
+                moveParaAptos(i);
+                break;
+            }
+        }
+//       if (coreArrayList.size() < Integer.parseInt(textfieldCores.getText()) && processoArrayList.size() > 0) {
+//            coreArrayList.add(processoArrayList.get(0));
+//            coreArrayList.get(coreArrayList.size() - 1).start();
+//            coreArrayList.get(coreArrayList.size() - 1).processo.setEstado(EnumEstado.EXECUTANDO);
+//            processoArrayList.remove(0);
+//            hBoxCore.getChildren().add(hBoxProcesso.getChildren().get(0));
+//            hBoxProcesso.getChildren().clear();
+//            for (int i = 0; i < processoArrayList.size(); i++) {
+//
+//                hBoxProcesso.getChildren().add(processoArrayList.get(i).getRoot());
+//            }
+//            System.out.println("entrou na insercao 1");
+//
+//        }
+//
+//        //checa se o tamanho do processador lita < valor dos cores
+//
+//        for (int i = 0; i < coreArrayList.size(); i++) {
+//            if (coreArrayList.get(i).quantumValor == Integer.parseInt(textField_quantum.getText())) {
+//                processoArrayList.add(coreArrayList.get(i));
+//                coreArrayList.get(i).processo.setEstado(EnumEstado.ESPERANDO);
+//
+//                hBoxCore.getChildren().remove(i);
+//                hBoxProcesso.getChildren().add(processoArrayList.get(processoArrayList.size() - 1).getRoot());
+//
+//
+//            }
+//            if (coreArrayList.get(i).processo.getEstado() == EnumEstado.FINALIZADO) {
+//
+//                System.out.println("entrou no insrcao e rmocao");
+//
+//                finalizados.add(coreArrayList.get(i));
+//                coreArrayList.remove(i);
+//
+//                hBoxCore.getChildren().remove(i);
+//
+//                hBoxCore.getChildren().add(i, processoArrayList.get(0).getRoot());
+//                coreArrayList.add(i, processoArrayList.get(0));
+//
+//                processoArrayList.get(0).start();
+//                processoArrayList.get(0).processo.setEstado(EnumEstado.EXECUTANDO);
+//
+//                processoArrayList.remove(0);
+//
+//                hBoxProcesso.getChildren().remove(0);
+//
+//                hBoxDeadLine.getChildren().add(finalizados.get(finalizados.size() - 1).getRoot());
+//
+//
+//            }
+//        }
+//
+
+    }
+
+    public void moveParaAptos(int i) {
+
+        processoArrayList.add(coreArrayList.get(i));
+        coreArrayList.get(i).processo.setEstado(EnumEstado.ESPERANDO);
+        hBoxCore.getChildren().remove(coreArrayList.get(i).getRoot());
+        hBoxProcesso.getChildren().add(coreArrayList.get(i).getRoot());
+
+        coreArrayList.remove(i);
+
+
+    }
+
+    public void moveParaFinalizados(int i) {
+        finalizados.add(coreArrayList.get(i));
+
+
+        hBoxCore.getChildren().remove(coreArrayList.get(i).getRoot());
+        coreArrayList.remove(i);
+
+        hBoxDeadLine.getChildren().add(finalizados.get(finalizados.size()-1).getRoot());
 
 
 
     }
 
-    public void arrochaNoProcessador(){
+    public void moveParaProcessador() {
 
+        coreArrayList.add(processoArrayList.get(0));
+        coreArrayList.get(coreArrayList.size() - 1);
+        coreArrayList.get(coreArrayList.size() - 1).processo.setEstado(EnumEstado.EXECUTANDO);
+        processoArrayList.remove(0);
+        hBoxCore.getChildren().add(coreArrayList.get(coreArrayList.size()-1).getRoot());
 
-
-        if (coreArrayList.size()<Integer.parseInt(textfieldCores.getText())&&processoArrayList.size()>0) {
-            coreArrayList.add(processoArrayList.get(0));
-            coreArrayList.get(coreArrayList.size() - 1).start();
-            coreArrayList.get(coreArrayList.size() - 1).processo.setEstado(EnumEstado.EXECUTANDO);
-            processoArrayList.remove(0);
-            hBoxCore.getChildren().add(hBoxProcesso.getChildren().get(0));
-            hBoxProcesso.getChildren().clear();
-            for (int i = 0; i < processoArrayList.size(); i++) {
-
-                hBoxProcesso.getChildren().add(processoArrayList.get(i).getRoot());
-            }
-            System.out.println("entrou na insercao 1");
-
-        }
-
-        //checa se o tamanho do processador lita < valor dos cores
-
-        for (int i = 0; i < coreArrayList.size(); i++) {
-            if (coreArrayList.get(i).quantum==Integer.parseInt(textField_quantum.getText())){
-                processoArrayList.add(coreArrayList.get(i));
-                coreArrayList.get(i).processo.setEstado(EnumEstado.ESPERANDO);
-
-                hBoxCore.getChildren().remove(i);
-                hBoxProcesso.getChildren().add(processoArrayList.get(processoArrayList.size()-1).getRoot());
-
-
-
-            }
-            if (coreArrayList.get(i).processo.getEstado() == EnumEstado.FINALIZADO) {
-
-                System.out.println("entrou no insrcao e rmocao");
-
-                finalizados.add(coreArrayList.get(i));
-                coreArrayList.remove(i);
-
-                hBoxCore.getChildren().remove(i);
-
-                hBoxCore.getChildren().add(i, processoArrayList.get(0).getRoot());
-                coreArrayList.add(i, processoArrayList.get(0));
-
-                processoArrayList.get(0).start();
-                processoArrayList.get(0).processo.setEstado(EnumEstado.EXECUTANDO);
-
-                processoArrayList.remove(0);
-/*
-                hBoxProcesso.getChildren().remove(0);
-*/
-                hBoxDeadLine.getChildren().add(finalizados.get(finalizados.size()-1).getRoot());
-
-
-            }
-        }
     }
 
 
@@ -134,11 +189,9 @@ public class ControllerRR extends Thread implements Initializable {
 
         Parent root = (Parent) loader.load();
         processoArrayList.add(loader.getController());
-        processoArrayList.get(processoArrayList.size()-1).setRoot(root);
-        hBoxProcesso.getChildren().add(processoArrayList.get(processoArrayList.size()-1).getRoot());
+        processoArrayList.get(processoArrayList.size() - 1).setRoot(root);
+        hBoxProcesso.getChildren().add(processoArrayList.get(processoArrayList.size() - 1).getRoot());
         hBoxProcesso.setSpacing(10);
-
-
 
     }
 
@@ -161,7 +214,6 @@ public class ControllerRR extends Thread implements Initializable {
         processoArrayList.get(0).processo.setEstado(EnumEstado.EXECUTANDO);
 
 
-
     }
 
 
@@ -173,7 +225,7 @@ public class ControllerRR extends Thread implements Initializable {
             Parent root = (Parent) loader.load();
             processoArrayList.add(loader.getController());
 
-            processoArrayList.get(processoArrayList.size()-1).setRoot(root);
+            processoArrayList.get(processoArrayList.size() - 1).setRoot(root);
 
 
         }
@@ -181,30 +233,23 @@ public class ControllerRR extends Thread implements Initializable {
 //        processoArrayList.sort(Comparator.comparingInt(ControllerProcessoRR::getProcessoTempoTotalProcesso));
 
 
-        for (int i = 0; i < processoArrayList.size() ; i++) {
+        for (int i = 0; i < processoArrayList.size(); i++) {
             hBoxProcesso.getChildren().add(processoArrayList.get(i).getRoot());
-
+            processoArrayList.get(i).start();
         }
         start();
 
     }
 
     public void processoMais1(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/processo.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/processoRR.fxml"));
 
         Parent root = (Parent) loader.load();
         processoArrayList.add(loader.getController());
-        processoArrayList.get(processoArrayList.size()-1).setRoot(root);
+        processoArrayList.get(processoArrayList.size() - 1).setRoot(root);
+        processoArrayList.get(processoArrayList.size()-1).start();
+        hBoxProcesso.getChildren().add(processoArrayList.get(processoArrayList.size()-1).getRoot());
 
-
-        processoArrayList.sort(Comparator.comparingInt(ControllerProcessoRR::getProcessoTempoTotalProcesso));
-        hBoxProcesso.getChildren().clear();
-
-        for (ControllerProcessoRR p: processoArrayList ) {
-
-            hBoxProcesso.getChildren().add(p.getRoot());
-
-        }
 
 
     }

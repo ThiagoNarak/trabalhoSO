@@ -17,9 +17,11 @@ public class Processo  extends Thread{
     private ObjectProperty<EnumEstado> estado;
     private IntegerProperty tempoLimite;
     private ControllerProcessoSJF controllerProcessoSJF;
+    private IntegerProperty quantumRestante;
 
     public Processo() {
         Random random = new Random();
+        this.quantumRestante = new SimpleIntegerProperty(0);
         this.pid = new SimpleIntegerProperty(Util.pid);Util.pid++;
         this.tempoExecucaoTotal =new SimpleIntegerProperty(random.nextInt(16)+4) ;
         this.tempoRestante = new SimpleIntegerProperty(tempoExecucaoTotal.get());
@@ -51,6 +53,18 @@ public class Processo  extends Thread{
 
     public int getTempoExecucaoTotal() {
         return tempoExecucaoTotal.get();
+    }
+
+    public int getQuantumRestante() {
+        return quantumRestante.get();
+    }
+
+    public IntegerProperty quantumRestanteProperty() {
+        return quantumRestante;
+    }
+
+    public void setQuantumRestante(int quantumRestante) {
+        this.quantumRestante.set(quantumRestante);
     }
 
     public IntegerProperty tempoExecucaoTotalProperty() {

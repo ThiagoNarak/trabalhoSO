@@ -76,6 +76,26 @@ public class ControllerProcessoSJF extends Thread implements Initializable{
     public int getControllerTempoTotal(){
         return Integer.parseInt(totalTempo.getText());
     }
+    public void brilhaPurpurina(int red, int green,int blue){
+
+        final Animation animation = new Transition() {
+
+            {
+                setCycleDuration(Duration.millis(2000));
+                setInterpolator(Interpolator.EASE_OUT);
+            }
+
+            @Override
+            protected void interpolate(double frac) {
+                Color vColor = new Color(red, green, blue, 1 - frac);
+                anchorpan.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+        };
+        animation.play();
+
+
+
+    }
 
     public void start(){
 
@@ -93,14 +113,16 @@ public class ControllerProcessoSJF extends Thread implements Initializable{
                                     &&processo.getTempoRestante()>0
                                     ){
                                 processo.setTempoRestante(processo.getTempoRestante()-1);
-
+                                brilhaPurpurina(0,0,1);
                             }
                             if (processo.getTempoRestante()==0){
                                 processo.setEstado(EnumEstado.FINALIZADO);
+                                brilhaPurpurina(1,0,0);
 
                             }
                             if (processo.getTempoLimite()==0){
                                 processo.setEstado(EnumEstado.ABORTADO);
+                                brilhaPurpurina(1,1,0);
                             }
                             id.setText(""+processo.getPid());
                             totalTempo.setText(""+processo.getTempoExecucaoTotal());

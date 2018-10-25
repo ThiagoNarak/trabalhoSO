@@ -12,22 +12,24 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerProcessoLTG extends Thread implements Initializable{
-    @FXML public Label id;
-    @FXML public Label totalTempo;
-    @FXML public Label estado;
-    @FXML public Label tempoRestante;
-    @FXML public Label deadLine;
+public class ControllerProcessoLTG extends Thread implements Initializable {
+    @FXML
+    public Label id;
+    @FXML
+    public Label totalTempo;
+    @FXML
+    public Label estado;
+    @FXML
+    public Label tempoRestante;
+    @FXML
+    public Label deadLine;
     public Processo processo;
     public ControllerProcessoLTG controllerProcessoLTG;
     public Parent root;
@@ -45,11 +47,24 @@ public class ControllerProcessoLTG extends Thread implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         processo = new Processo();
 
-        id.setText(""+processo.getPid());
-        totalTempo.setText(""+processo.getTempoExecucaoTotal());
-        tempoRestante.setText(""+processo.getTempoRestante());
-        estado.setText(""+processo.getEstado());
-        deadLine.setText(""+processo.getTempoLimite());
+        id.setText("" + processo.getPid());
+        totalTempo.setText("" + processo.getTempoExecucaoTotal());
+        tempoRestante.setText("" + processo.getTempoRestante());
+        estado.setText("" + processo.getEstado());
+        deadLine.setText("" + processo.getTempoLimite());
+
+
+    }
+
+    public int getProcessoTempoTotalProcesso() {
+        return processo.getTempoLimite();
+    }
+
+    public int getControllerTempoTotal() {
+        return Integer.parseInt(totalTempo.getText());
+    }
+
+    public void brilhaPurpurina(int red,int green,int blue) {
 
         final Animation animation = new Transition() {
 
@@ -60,23 +75,17 @@ public class ControllerProcessoLTG extends Thread implements Initializable{
 
             @Override
             protected void interpolate(double frac) {
-                Color vColor = new Color(0, 1, 0, 1 - frac);
-                anchorpan.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
+                Color vColor = new Color(red, green, blue, 1 - frac);
+                //anchorpan.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
+                HBox hbox = (HBox) anchorpan.getChildren().get(0);
+                hbox.setBackground(new Background(new BackgroundFill(vColor, CornerRadii.EMPTY, Insets.EMPTY)));
             }
         };
         animation.play();
 
-
-
-    }
-    public int getProcessoTempoTotalProcesso(){
-        return processo.getTempoLimite();
-    }
-    public int getControllerTempoTotal(){
-        return Integer.parseInt(totalTempo.getText());
     }
 
-    public void start(){
+    public void start() {
         Task task = new Task<Void>() {
             @Override
             public Void call() throws Exception {
@@ -88,28 +97,32 @@ public class ControllerProcessoLTG extends Thread implements Initializable{
                         public void run() {
 
 
-                            if (processo.getEstado() == EnumEstado.PRONTO){
-                                processo.setTempoLimite(processo.getTempoLimite()-1);
+                            if (processo.getEstado() == EnumEstado.PRONTO) {
+                                processo.setTempoLimite(processo.getTempoLimite() - 1);
+                                brilhaPurpurina(0,1,0);
                                 System.out.println("entrou no pronto");
                             }
                             if (processo.getEstado() == EnumEstado.EXECUTANDO
-                                    &&processo.getTempoRestante()>0
-                                    ){
-                                processo.setTempoRestante(processo.getTempoRestante()-1);
+                                    && processo.getTempoRestante() > 0
+                                    ) {
+                                processo.setTempoRestante(processo.getTempoRestante() - 1);
+                                brilhaPurpurina(1,0,0);
 
                             }
-                            if (processo.getTempoRestante()==0){
+                            if (processo.getTempoRestante() == 0) {
                                 processo.setEstado(EnumEstado.FINALIZADO);
+                                brilhaPurpurina(0,0,1);
 
                             }
-                            if (processo.getTempoLimite()==0){
+                            if (processo.getTempoLimite() == 0) {
                                 processo.setEstado(EnumEstado.ABORTADO);
+                                brilhaPurpurina(1,1,0);
                             }
-                            id.setText(""+processo.getPid());
-                            totalTempo.setText(""+processo.getTempoExecucaoTotal());
-                            tempoRestante.setText(""+processo.getTempoRestante());
-                            estado.setText(""+processo.getEstado());
-                            deadLine.setText(""+processo.getTempoLimite());
+                            id.setText("" + processo.getPid());
+                            totalTempo.setText("" + processo.getTempoExecucaoTotal());
+                            tempoRestante.setText("" + processo.getTempoRestante());
+                            estado.setText("" + processo.getEstado());
+                            deadLine.setText("" + processo.getTempoLimite());
 
                         }
                     });
@@ -121,9 +134,6 @@ public class ControllerProcessoLTG extends Thread implements Initializable{
         Thread th = new Thread(task);
         th.setDaemon(true);
         th.start();
-
-
-
 
 
     }

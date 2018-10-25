@@ -15,7 +15,7 @@
                   <Label text="TOTAL:" />
                   <Label text="Tempo Restante" />
                   <Label text="ESTADO:" />
-                  <Label text="DEADLINE" />
+                  <Label text="Quantum:" />
                </children>
             </VBox>
             <VBox prefHeight="95.0" prefWidth="102.0">
@@ -24,7 +24,7 @@
                   <Label fx:id="totalTempo" text="total:" />
                   <Label fx:id="tempoRestante" text="tempoRestante" />
                   <Label fx:id="estado" text="estado:" />
-                  <Label fx:id="deadLine" text="deadLine:" />
+                  <Label fx:id="quantum" text="tempo" />
                </children>
             </VBox>
          </children>
